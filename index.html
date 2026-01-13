@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Echo Studio | Professional Audio Generator</title>
+    <meta name="description" content="A professional-grade echo generation studio for signal processing and audio effects.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Controls -->
+        <aside class="sidebar">
+            <header class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">🎵</span>
+                    <h1>Echo Studio</h1>
+                </div>
+                <div class="formula">
+                    <code>Y[n] = x[n] + α·Y[n-n<sub>d</sub>]</code>
+                </div>
+            </header>
+
+            <div class="control-group">
+                <h3>Source Audio</h3>
+                <div class="button-row">
+                    <label for="audio-upload" class="btn btn-primary">
+                        <span>📁</span> Load Audio
+                        <input type="file" id="audio-upload" accept="audio/*" hidden>
+                    </label>
+                    <button id="generate-test" class="btn btn-secondary">
+                        <span>🧪</span> Test Signal
+                    </button>
+                </div>
+                <p id="file-info" class="status-text">No audio loaded</p>
+            </div>
+
+            <div class="control-group">
+                <div class="label-row">
+                    <h3>Feedback Gain (α)</h3>
+                    <span id="alpha-value" class="value-badge">0.60</span>
+                </div>
+                <input type="range" id="alpha-slider" min="0.1" max="0.9" step="0.01" value="0.6">
+                <div class="slider-labels">
+                    <span>Subtle</span>
+                    <span>Heavy</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="label-row">
+                    <h3>Delay Time (ms)</h3>
+                    <span id="delay-value" class="value-badge">300 ms</span>
+                </div>
+                <input type="range" id="delay-slider" min="50" max="2000" step="10" value="300">
+                <div class="slider-labels">
+                    <span>50ms</span>
+                    <span>2000ms</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="label-row">
+                    <h3>Tail Duration (s)</h3>
+                    <span id="tail-value" class="value-badge">3.0 s</span>
+                </div>
+                <input type="range" id="tail-slider" min="1" max="10" step="0.1" value="3">
+                <div class="slider-labels">
+                    <span>1s</span>
+                    <span>10s</span>
+                </div>
+            </div>
+
+            <div class="action-section">
+                <button id="process-btn" class="btn btn-accent" disabled>
+                    Apply Echo Effect
+                </button>
+                <div id="status-label" class="process-status">Ready</div>
+            </div>
+
+            <div class="info-panel">
+                <div id="info-content" class="info-text">
+                    Load audio to begin...
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="workspace">
+            <section class="viz-card">
+                <div class="card-header">
+                    <h2>Input Signal</h2>
+                    <div class="card-actions">
+                        <button id="play-input" class="btn-icon" title="Play Input" disabled>▶</button>
+                        <button id="stop-btn" class="btn-icon" title="Stop">⏹</button>
+                    </div>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="input-canvas"></canvas>
+                </div>
+            </section>
+
+            <section class="viz-card">
+                <div class="card-header">
+                    <h2>Output Signal</h2>
+                    <div class="card-actions">
+                        <button id="play-output" class="btn-icon" title="Play Output" disabled>▶</button>
+                        <button id="save-btn" class="btn-icon" title="Save Audio" disabled>💾</button>
+                    </div>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="output-canvas"></canvas>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
